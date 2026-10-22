@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Calculator & Converter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div>
+            <p class="eyebrow">ALL-IN-ONE TOOL</p>
+            <h1>Smart Calculator</h1>
+            <p class="subtitle">Calculate, convert and simplify your day.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <nav class="tabs">
+            <a href="#calculator">Calculator</a>
+            <a href="#units">Unit Converter</a>
+            <a href="#currency">Currency</a>
+        </nav>
+
+        <section class="cards">
+            <article class="card" id="calculator">
+                <div class="card-icon">＋ − × ÷</div>
+                <h2>Basic Calculator</h2>
+                <p class="description">Perform everyday arithmetic operations.</p>
+
+                <form method="POST">
+                    <input type="hidden" name="category" value="calculator">
+
+                    <label for="number1">First number</label>
+                    <input id="number1" type="number" step="any"
+                           name="number1" placeholder="Enter first number" required>
+
+                    <label for="operation">Operation</label>
+                    <select id="operation" name="operation">
+                        <option value="+">Addition (+)</option>
+                        <option value="-">Subtraction (-)</option>
+                        <option value="*">Multiplication (×)</option>
+                        <option value="/">Division (÷)</option>
+                    </select>
+
+                    <label for="number2">Second number</label>
+                    <input id="number2" type="number" step="any"
+                           name="number2" placeholder="Enter second number" required>
+
+                    <button type="submit">Calculate Result</button>
+                </form>
+            </article>
+
+            <article class="card" id="units">
+                <div class="card-icon">↔</div>
+                <h2>Unit Converter</h2>
+                <p class="description">Convert distance and temperature.</p>
+
+                <form method="POST">
+                    <input type="hidden" name="category" value="unit">
+
+                    <label for="value">Enter value</label>
+                    <input id="value" type="number" step="any" name="value"
+                           placeholder="Enter a value" required>
+
+                    <label for="conversion">Conversion type</label>
+                    <select id="conversion" name="conversion">
+                        <option value="km_miles">Kilometers → Miles</option>
+                        <option value="c_f">Celsius → Fahrenheit</option>
+                    </select>
+
+                    <button type="submit">Convert Unit</button>
+                </form>
+            </article>
+
+            <article class="card" id="currency">
+                <div class="card-icon">₹ ↔ $</div>
+                <h2>Currency Converter</h2>
+                <p class="description">Convert INR and USD using a sample rate.</p>
+
+                <form method="POST">
+                    <input type="hidden" name="category" value="currency">
+
+                    <label for="amount">Amount</label>
+                    <input id="amount" type="number" min="0" step="any"
+                           name="amount" placeholder="Enter amount" required>
+
+                    <label for="currency_conversion">Conversion type</label>
+                    <select id="currency_conversion" name="currency_conversion">
+                        <option value="inr_usd">INR → USD</option>
+                        <option value="usd_inr">USD → INR</option>
+                    </select>
+
+                    <button type="submit">Convert Currency</button>
+                </form>
+            </article>
+        </section>
+
+        {% if result is not none %}
+        <section class="result success" aria-live="polite">
+            <span>YOUR RESULT</span>
+            <h2>{{ result }}</h2>
+        </section>
+        {% endif %}
+
+        {% if error %}
+        <section class="result error" role="alert">
+            <strong>Something went wrong</strong>
+            <p>{{ error }}</p>
+        </section>
+        {% endif %}
+
+        <p class="note">
+            Currency conversion uses a sample rate of ₹83 per USD.
+            This is not a live exchange rate.
+        </p>
+    </main>
+
+    <footer>Built with Python, Flask, HTML & CSS</footer>
+</body>
+</html>
